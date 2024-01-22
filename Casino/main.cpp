@@ -3,14 +3,23 @@
 
 #include "Deck.h"
 
+using Casino::Card;
 
 int main() {
 	Casino::Deck deck;
 	srand(time(NULL));
 	deck.shuffle();
 
-	std::cout << deck.getCard() << std::endl;
-	std::cout << deck.getCard() << std::endl;
+	// quick blackjack game:
+
+	Card player1 = deck.getCard();
+	Card dealer_face_down = deck.getCard();
+	Card player2 = deck.getCard();
+	Card dealer_face_up = deck.getCard();
+
+	std::cout << player1 << std::endl;
+	std::cout << player2 << std::endl;
+
 
 //	printf("%s\n", card);
 
