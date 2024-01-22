@@ -1,15 +1,18 @@
 #include <Windows.h>
 #include <iostream>
 
-#include "Card.h"
+#include "Deck.h"
 
 
 int main() {
-	Casino::Card card("Spades", "Ace");
+	Casino::Deck deck;
+	srand(time(NULL));
+	deck.shuffle();
 
-	std::cout << card;
+	std::cout << deck.getCard() << std::endl;
+	std::cout << deck.getCard() << std::endl;
+
 //	printf("%s\n", card);
-
 
 	std::cin.get();
 	return 1;
@@ -19,7 +22,7 @@ int main() {
 
 to-do:
 make a deck class (separate header)
-	-  internal queue
+	-  internal stack
 	-  load all cards linearly (suit by suit) then shuffle
 	-  write shuffle method
 

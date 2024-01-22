@@ -3,6 +3,8 @@
 #include <ostream>
 
 namespace Casino {
+	// add properties that allow toggle short / long version of suit & rank
+
 	enum Suit {
 		Clubs,
 		Diamonds,
@@ -73,28 +75,28 @@ namespace Casino {
 		throw std::invalid_argument("Unknown rank: " + s);
 	}
 
+	Suit string_to_suit(std::string s) {
+		if (s == "Clubs") return Clubs;
+		if (s == "Diamonds") return Diamonds;
+		if (s == "Hearts") return Hearts;
+		if (s == "Spades") return Spades;
+
+		throw std::invalid_argument("Unknown suit: " + s);
+	}
+
 	class Card
 	{
 	public:
 		Card() {}
 		Card(Suit _suit, Rank _rank) : suit(_suit), rank(_rank) {}
 		Card(std::string _suit, std::string _rank) : suit(string_to_suit(_suit)), rank(string_to_rank(_rank)) {}
+		Card(std::string _suit, int _rank) : suit(string_to_suit(_suit)) {
+			if (_rank > 0 && _rank < 13) rank = (Rank)(_rank - 1);
+			else throw std::invalid_argument("Out of range rank: " + _rank);
+		}
 
 		std::string to_string() const {
 			return rank_to_string(rank) + " of " + suit_to_string(suit);
-		}
-
-		Suit string_to_suit(std::string s) const {
-			if (s == "Clubs") return Clubs;
-			if (s == "Diamonds") return Diamonds;
-			if (s == "Hearts") return Hearts;
-			if (s == "Spades") return Spades;
-
-			throw std::invalid_argument("Unknown suit: " + s);
-		}
-
-		friend std::ostream& operator <<(std::ostream& out, const Card& obj) {
-			return out << obj.to_string();
 		}
 
 		Suit getSuit() {
@@ -106,7 +108,11 @@ namespace Casino {
 		}
 
 	private:
-		Suit suit = Diamonds;
-		Rank rank = Ten;
+		Suit suit;
+		Rank rank;
+
+		friend std::ostream& operator <<(std::ostream& out, const Card& obj) {
+			return out << obj.to_string();
+		}
 	};
 }
